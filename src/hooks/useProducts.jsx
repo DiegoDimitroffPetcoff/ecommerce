@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
-import productsMock from "../mocks/mockProducts.json";
+import { useEffect, useContext } from "react";
+
 import { getAllProducts } from "../services/getAlllProdcuts";
+import { ProductContext } from "../context/productContext";
 export function useProducts() {
-  const [product, setProduct] = useState([]);
+  const { product, setProduct } = useContext(ProductContext);
+
   useEffect(() => {
     getAllProducts().then((products) => setProduct(products));
   }, []);

@@ -4,6 +4,7 @@ import "./App.css";
 import { ProductList } from "./components/productList";
 import { useProducts } from "./hooks/useProducts";
 import { useFilter } from "./hooks/useFilter";
+import { Cart } from "./components/Cart";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -29,6 +30,12 @@ function App() {
             <input value={search} onChange={handleOnchange} />
             <button onClick={handleSubmite}>Buscar</button>
           </form>
+        </section>
+        <section className="CartContent">
+          {productList &&
+            productList.map((product) => {
+              return <Cart key={product.id} {...product} />;
+            })}
         </section>
       </header>
       <main>
