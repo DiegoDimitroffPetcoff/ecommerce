@@ -31,12 +31,12 @@ function App() {
             <button onClick={handleSubmite}>Buscar</button>
           </form>
         </section>
-        <section className="CartContent">
+{/*         <section className="CartContent">
           {productList &&
             productList.map((product) => {
               return <Cart key={product.id} {...product} />;
             })}
-        </section>
+        </section> */}
       </header>
       <main>
         Productos:
