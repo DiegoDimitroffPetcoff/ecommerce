@@ -32,3 +32,4 @@ export function CartProvider({ children }) {
     </CartContext.Provider>
   );
 }
+
