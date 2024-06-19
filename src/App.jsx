@@ -5,6 +5,7 @@ import { ProductList } from "./components/productList";
 import { useProducts } from "./hooks/useProducts";
 import { useFilter } from "./hooks/useFilter";
 import { Cart } from "./components/Cart";
+import { CartProvider } from "./context/cartContext";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -21,7 +22,7 @@ function App() {
 
   const ProductFiltered = useFilter(productList, search);
   return (
-    <>
+    <CartProvider>
       <header>
         <h1>Mercado De pulgas</h1>
         <section>
@@ -31,18 +32,15 @@ function App() {
             <button onClick={handleSubmite}>Buscar</button>
           </form>
         </section>
-{/*         <section className="CartContent">
-          {productList &&
-            productList.map((product) => {
-              return <Cart key={product.id} {...product} />;
-            })}
-        </section> */}
+        <section className="CartContent">
+          <Cart />
+        </section>
       </header>
       <main>
         Productos:
         <ProductList productsList={ProductFiltered} />
       </main>
-    </>
+    </CartProvider>
   );
 }
 
