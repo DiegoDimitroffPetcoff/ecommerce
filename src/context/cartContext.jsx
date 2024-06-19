@@ -21,10 +21,10 @@ export function CartProvider({ children }) {
     }
   }
 
-
   function deleteProduct(product) {
-    const cartFiltered = cart.filter((item)=>item.product.id !== product.id)
-    setcart(cartFiltered)
+    setcart((preCart) =>
+      preCart.filter((item) => item.product.id !== product.id)
+    );
   }
   return (
     <CartContext.Provider value={{ cart, setcart, addToCart, deleteProduct }}>
@@ -32,4 +32,3 @@ export function CartProvider({ children }) {
     </CartContext.Provider>
   );
 }
-
