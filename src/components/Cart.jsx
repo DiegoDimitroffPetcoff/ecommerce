@@ -1,8 +1,13 @@
 import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import { MdOutlineDeleteForever } from "react-icons/md";
+import { CiShoppingCart } from "react-icons/ci";
+
 import { CartContext } from "../context/cartContext";
 import { useContext } from "react";
+
 export function Cart() {
-  const { cart, setcart } = useContext(CartContext);
+  const { cart, deleteProduct, addToCart } = useContext(CartContext);
 
   return (
     <ul className="CartUl">
@@ -27,6 +32,20 @@ export function Cart() {
                   Quantity: <strong>{product.quantity}</strong>
                 </Card.Text>
                 <Card.Subtitle> ${product.product.price}</Card.Subtitle>
+                <div >
+                  <Button
+                    onClick={() => addToCart(product.product)}
+                    variant="primary"
+                  >
+                    <CiShoppingCart />
+                  </Button>
+                  <Button
+                    onClick={() => deleteProduct(product.product)}
+                    variant="primary"
+                  >
+                    <MdOutlineDeleteForever />
+                  </Button>
+                </div>
               </Card.Body>
             </Card>
           </li>

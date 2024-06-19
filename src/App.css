@@ -36,6 +36,7 @@ li {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: #d32f2f;
+  background-color: #d32f2f79;
   align-items: center;
+  border-radius: 10px;
 }
