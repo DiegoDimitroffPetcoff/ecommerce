@@ -29,6 +29,16 @@ li {
   z-index: 10;
   height: 100%;
 }
+.ECart {
+  width: 50px;
+  background-color: #009688;
+  margin: 25px;
+  border-radius: 100%;
+  color: black;
+  height: 50px;
+  padding: 10px;
+  color: white;
+}
 .CartUl {
   width: 170px;
   padding: 10px;

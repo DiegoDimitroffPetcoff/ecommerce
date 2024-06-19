@@ -2,6 +2,7 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { MdOutlineDeleteForever } from "react-icons/md";
 import { CiShoppingCart } from "react-icons/ci";
+import { IoCartOutline } from "react-icons/io5";
 
 import { CartContext } from "../context/cartContext";
 import { useContext } from "react";
@@ -11,7 +12,7 @@ export function Cart() {
 
   return (
     <>
-      {cart.length > 0 && (
+      {cart.length > 0 ? (
         <ul className="CartUl">
           {cart.map((product) => {
             return (
@@ -54,6 +55,10 @@ export function Cart() {
             );
           })}
         </ul>
+      ) : (
+        <div className="ECart">
+          <IoCartOutline />
+        </div>
       )}
     </>
   );
