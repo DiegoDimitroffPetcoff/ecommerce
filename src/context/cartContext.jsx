@@ -14,21 +14,27 @@ export function CartProvider({ children }) {
 
   function addToCart(product) {
     const cartItem = cart.find((item) => item.product.id === product.id);
+
     if (cartItem) {
       setcart((preState) =>
         preState.map((item) => {
           if (item.product.id === product.id) {
+            console.log("1");
             const newProduct = { ...item, quantity: item.quantity + 1 };
-            window.localStorage.setItem("cart", JSON.stringify(newProduct));
+            window.localStorage.setItem("cart", JSON.stringify(preState));
             return newProduct;
           } else {
-            window.localStorage.setItem("cart", JSON.stringify(item));
+            console.log("2");
+
+            window.localStorage.setItem("cart", JSON.stringify(preState));
             return item;
           }
         })
       );
     } else {
       setcart((preState) => {
+        console.log("3");
+
         const newProduct = [...preState, { product, quantity: 1 }];
         window.localStorage.setItem("cart", JSON.stringify(newProduct));
         return newProduct;
