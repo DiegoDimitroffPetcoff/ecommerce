@@ -1,58 +1,61 @@
-import { createContext, useState } from "react";
+import { createContext, useReducer, useState } from "react";
 
 export const CartContext = createContext();
 
+const initialState = JSON.parse(window.localStorage.getItem("cart")) || [];
+const reducer = (state, action) => {
+  const { type, payload: product } = action;
+  switch (type) {
+    case "ADD_TO_CART": {
+      const cartItem = state.find((item) => item.product.id === product.id);
+      if (cartItem) {
+        const newState = state.map((item) => {
+          if (item.product.id === product.id) {
+            const newProduct = { ...item, quantity: item.quantity + 1 };
+            window.localStorage.setItem("cart", JSON.stringify(state));
+            return newProduct;
+          } else {
+            window.localStorage.setItem("cart", JSON.stringify(state));
+            return item;
+          }
+        });
+        return newState;
+      } else {
+        const newProduct = [...state, { product, quantity: 1 }];
+        window.localStorage.setItem("cart", JSON.stringify(newProduct));
+        return newProduct;
+      }
+    }
+    case "DELENTE_PRODUCT": {
+      const newProduct = state.filter((item) => item.product.id !== product.id);
+      window.localStorage.setItem("cart", JSON.stringify(newProduct));
+      return newProduct;
+    }
+  }
+  return state;
+};
+
 export function CartProvider({ children }) {
-  const [cart, setcart] = useState(() => {
+  /*   const [cart, setcart] = useState(() => {
     const cartStore = window.localStorage.getItem("cart");
     if (cartStore) {
       return JSON.parse(cartStore);
     } else {
       return [];
     }
-  });
+  }); */
+
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   function addToCart(product) {
-    const cartItem = cart.find((item) => item.product.id === product.id);
-
-    if (cartItem) {
-      setcart((preState) =>
-        preState.map((item) => {
-          if (item.product.id === product.id) {
-            console.log("1");
-            const newProduct = { ...item, quantity: item.quantity + 1 };
-            window.localStorage.setItem("cart", JSON.stringify(preState));
-            return newProduct;
-          } else {
-            console.log("2");
-
-            window.localStorage.setItem("cart", JSON.stringify(preState));
-            return item;
-          }
-        })
-      );
-    } else {
-      setcart((preState) => {
-        console.log("3");
-
-        const newProduct = [...preState, { product, quantity: 1 }];
-        window.localStorage.setItem("cart", JSON.stringify(newProduct));
-        return newProduct;
-      });
-    }
+    dispatch({ type: "ADD_TO_CART", payload: product });
   }
 
   function deleteProduct(product) {
-    setcart((preCart) => {
-      const newProduct = preCart.filter(
-        (item) => item.product.id !== product.id
-      );
-      window.localStorage.setItem("cart", JSON.stringify(newProduct));
-      return newProduct;
-    });
+    dispatch({ type: "DELENTE_PRODUCT", payload: product });
   }
   return (
-    <CartContext.Provider value={{ cart, setcart, addToCart, deleteProduct }}>
+    <CartContext.Provider value={{ cart: state, addToCart, deleteProduct }}>
       {children}
     </CartContext.Provider>
   );

@@ -12,7 +12,7 @@ export function Cart() {
 
   return (
     <>
-      {cart.length > 0 ? (
+      {cart && cart.length > 0 ? (
         <ul className="CartUl">
           {cart.map((product) => {
             return (
